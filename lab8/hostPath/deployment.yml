@@ -17,7 +17,7 @@ spec:
       volumes:
       - name: test-volume
         hostPath:
-          path: mnt/hostPath/
+          path: /mnt/hostPath/
           type: Directory
       containers:
       - name: nginx-container
