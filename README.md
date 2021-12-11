@@ -10,9 +10,21 @@ This project consists in 8 tasks that aim at using the devOps tools discovered d
 
 * Clone this repository, from your local machine:
   ```
-  git clone https://github.com/laure-a/audouy-poulain-devops.git audouy-poulain
-  cd audouy-poulain
+  git clone https://github.com/laure-a/audouy-poulain-devops.git devops-project
+  cd devops-project
   ```
+* Go to folder iac (cd iac)
+
+  If you need to install vagrant guest additions for virtual box:
+  ```
+  vagrant plugin install vagrant-vbguest
+  ```
+  To create or start your VM, run the command:
+  ```
+  vagrant up
+  ```
+  You can access the web application at : 20.20.20.2:3000
+  
 *rajouter toutes les infos nécessaires pour installer les logiciels, les commandes pour lancer, etc*
 
 ## Authors
