@@ -1,28 +1,23 @@
 ---
-# OPTIONAL TASKS (needed to run checks from the host machine)
-# - name: Uncomment the GitLab IP whitelist line
-#   replace:
-#     path: /etc/gitlab/gitlab.rb
-#     regexp: '^# (gitlab_rails\[''monitoring_whitelist''\] = \[.*)\]$'
-#     replace: '\1, ''20.20.20.1'']'
 
-# - name: Reconfigure GitLab
-#   command: gitlab-ctl reconfigure
+- name: Start redis server
+  command: redis-server
 
-# - name: Restart unicorn
-#   command: gitlab-ctl restart unicorn
-#   retries: 2
-# END OF OPTIONAL TASKS
+- name: Run application tests
+  command: npm test
 
-- name: Check GitLab health
-  uri:
-    url: http://127.0.0.1/-/health
-    return_content: yes
-  # Register the output of the module in a variable
-  register: gitlab_health
+- name: Start application/userapi
+  command: npm start
 
-- name: Print GitLab health
-  debug:
-    msg: "{{ gitlab_health.content }}"
-
-# Run the 2 other kind of health checks below
+# - name: Check userapi health
+#   uri:
+#     url: http://127.0.0.1/-/health
+#     return_content: yes
+#   # Register the output of the module in a variable
+#   register: redis_health
+#
+# -
+#
+# - name: Print Redis health
+#   debug:
+#     msg: "{{ redis_health.content }}"

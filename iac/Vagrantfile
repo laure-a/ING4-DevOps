@@ -27,7 +27,8 @@ Vagrant.configure("2") do |config|
     # The path to the playbooks entry point
     ansible.playbook = "playbooks/run.yml"
     # Only run the roles with these tags
-    ansible.tags = "install"
+    # used for install part so we don't run healthchecks
+    # ansible.tags = "install"
   end
   # Specify path of folder to sync on host/VM
   config.vm.synced_folder "../userapi", "/home/vagrant/userapi",

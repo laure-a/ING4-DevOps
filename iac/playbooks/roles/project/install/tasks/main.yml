@@ -67,6 +67,6 @@
 
 - name: Install node modules
   become: no
-  command: npm Install
+  command: npm install
   args:
     chdir: /home/vagrant/userapi
