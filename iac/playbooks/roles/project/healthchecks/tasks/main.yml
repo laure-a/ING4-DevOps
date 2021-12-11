@@ -1,8 +1,7 @@
 ---
 
 - name: Start redis server
-  become: yes
-  command: service redis start
+  command: redis-server --daemonize yes
 
 - name: Run application tests
   command: npm test
@@ -20,15 +19,13 @@
   args:
     chdir: /home/vagrant/userapi
 
-# - name: Check userapi health
-#   uri:
-#     url: http://127.0.0.1/-/health
-#     return_content: yes
-#   # Register the output of the module in a variable
-#   register: redis_health
-#
-# -
-#
-# - name: Print Redis health
-#   debug:
-#     msg: "{{ redis_health.content }}"
+- name: Check userapi health
+  uri:
+    url: http://127.0.0.1:3000
+    return_content: yes
+  # Register the output of the module in a variable
+  register: userapi_health
+
+- name: Print userapi server health
+  debug:
+    msg: "{{ userapi_health.content }}"

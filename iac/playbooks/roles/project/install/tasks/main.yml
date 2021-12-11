@@ -24,10 +24,11 @@
     - http
     - https
 
-- name: Reload firewalld
-  service:
-    name: firewalld
-    state: reloaded
+# firewall reload blocks http access: cannot access app from browser
+# - name: Reload firewalld
+#   service:
+#     name: firewalld
+#     state: reloaded
 
 - name: Install postfix
   yum:
