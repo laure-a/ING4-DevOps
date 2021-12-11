@@ -2,14 +2,8 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-
-  # Do not pay attention to this parameter
-  # if Vagrant.has_plugin?("vagrant-vbguest")
-  #   config.vm.provider :virtualbox do |vb|
-  #     config.vbguest.auto_update = false
-  #   end
-  # end
-
+  # Specify path of folder to sync on host/VM
+  config.vm.synced_folder "../userapi", "/home/vagrant/userapi"
   # Define the project_server VM
   config.vm.define "project-server" do |server|
     # Specify the Vagrant box to use
@@ -29,7 +23,6 @@ Vagrant.configure("2") do |config|
     #   vmware.vmx["numvcpus"] = "1"
     # end
   end
-
   # Use Vagrant Ansible provisioner
   config.vm.provision "ansible_local" do |ansible|
     # The path to the playbooks entry point
@@ -37,5 +30,4 @@ Vagrant.configure("2") do |config|
     # Only run the roles with these tags
     ansible.tags = "install"
   end
-
 end
