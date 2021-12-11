@@ -1,13 +1,24 @@
 ---
 
 - name: Start redis server
-  command: redis-server
+  become: yes
+  command: service redis start
 
 - name: Run application tests
   command: npm test
+  args:
+    chdir: /home/vagrant/userapi
+  # Register the output of the module in a variable
+  register: userapi_test_health
+
+- name: Print userapi test health
+  debug:
+    msg: "{{ userapi_test_health.stdout.split('\n') }}"
 
 - name: Start application/userapi
-  command: npm start
+  command: pm2 start npm -- start
+  args:
+    chdir: /home/vagrant/userapi
 
 # - name: Check userapi health
 #   uri:

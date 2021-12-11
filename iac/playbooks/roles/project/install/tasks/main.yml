@@ -65,6 +65,12 @@
       - make
     state: latest
 
+- name: Install node daemon
+  become: yes
+  command: npm install pm2 -g
+  args:
+    chdir: /home/vagrant/userapi
+
 - name: Install node modules
   become: no
   command: npm install
