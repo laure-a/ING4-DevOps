@@ -1,14 +1,23 @@
 version: '3.3'
 services:
   redis:
-    image: redis
+    image: "redis"
+    # ports:
+    #   -"6379:6379"
+    expose:
+      - 6379
     volumes:
-      - redis_data:/data
+      - db_data:/data
   web:
     depends_on:
       - redis
-    image: project_devops:latest
+    links:
+      - redis
+    environment:
+      host: redis
+    # build: .
+    image: "laure15a/devops_project"
     ports:
-      - "3002:3000"
+      - "3000:3000"
 volumes:
-  redis_data:
+  db_data: {}
