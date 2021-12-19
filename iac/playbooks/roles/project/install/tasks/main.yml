@@ -1,0 +1,79 @@
+---
+- name: Install required packages
+  yum:
+    name:
+      - curl
+      - policycoreutils-python
+      - openssh-server
+    state: latest
+
+- name: Enable and start sshd
+  service:
+    name: sshd
+    state: started
+    enabled: yes
+
+- name: Enable HTTP+HTTPS access
+  firewalld:
+    # This is how we use a variable
+    service: "{{ item }}"
+    permanent: yes
+    state: enabled
+  # The module will be run for each item
+  with_items:
+    - http
+    - https
+
+# firewall reload blocks http access: cannot access app from browser
+# - name: Reload firewalld
+#   service:
+#     name: firewalld
+#     state: reloaded
+
+- name: Install postfix
+  yum:
+    name: postfix
+    state: latest
+
+- name: Enable and start postfix
+  service:
+    name: postfix
+    state: started
+    enabled: yes
+
+- name: Install redis
+  yum:
+    name: redis
+    state: latest
+
+- name: Download npm repository/script
+  get_url:
+    url: https://rpm.nodesource.com/setup_16.x
+    dest: /tmp/script.rpm.sh
+
+# could also do the npm installation using curl
+# and executing the script located at the url below
+#  shell: curl -sL https://rpm.nodesource.com/setup_16.x | bash -
+
+- name: Execute npm install script
+  script: /tmp/script.rpm.sh
+
+- name: Install npm dependencies
+  yum:
+    name:
+      - nodejs
+      - gcc-c++
+      - make
+    state: latest
+
+- name: Install node daemon
+  become: yes
+  command: npm install pm2 -g
+  args:
+    chdir: /home/vagrant/userapi
+
+- name: Install node modules
+  become: no
+  command: npm install
+  args:
+    chdir: /home/vagrant/userapi
