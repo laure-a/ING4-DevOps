@@ -1,0 +1,14 @@
+version: '3.3'
+services:
+  redis:
+    image: redis
+    volumes:
+      - redis_data:/data
+  web:
+    depends_on:
+      - redis
+    image: project_devops:latest
+    ports:
+      - "3002:3000"
+volumes:
+  redis_data:
