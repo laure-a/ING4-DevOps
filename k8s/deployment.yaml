@@ -5,7 +5,7 @@ metadata:
   labels:
     app: devops-audouypoulain
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: devops-audouypoulain
@@ -14,10 +14,14 @@ spec:
       labels:
         app: devops-audouypoulain
     spec:
+      volumes: 
+      - name:
       containers:
       - name: devops-audouypoulain-container
-        image: gcr.io/google-samples/kubernetes-bootcamp:v1
+        image: docker.io/thomaspln/devops_project
         ports: 
         - containerPort: 3002
         imagePullPolicy: Always
-
+      - name: redis-container
+        image: redis
+        
