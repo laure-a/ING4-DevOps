@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-audouypoulain-deployment
+  labels:
+    app: devops-audouypoulain
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: devops-audouypoulain
+  template:
+    metadata:
+      labels:
+        app: devops-audouypoulain
+    spec:
+      containers:
+      - name: devops-audouypoulain-container
+        image: gcr.io/google-samples/kubernetes-bootcamp:v1
+        ports: 
+        - containerPort: 3002
+        imagePullPolicy: Always
+
