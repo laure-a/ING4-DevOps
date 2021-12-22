@@ -1,26 +1,66 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: devops-audouypoulain-deployment
+  name: devops-audouypoulain-v1
   labels:
-    app: devops-audouypoulain
+    version: v1
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: devops-audouypoulain
+      version: v1
   template:
     metadata:
       labels:
         app: devops-audouypoulain
+        version: v1
     spec:
       volumes: 
         - name: persistent-vol-devops
           persistentVolumeClaim:
             claimName: redis-meta
       containers:
-        - name: devops-audouypoulain-container
-          image: docker.io/thomaspln/devops_project:latest
+        - name: devops-audouypoulain
+          image: docker.io/thomaspln/devops-project:v1
+          ports: 
+            - containerPort: 3000
+          imagePullPolicy: Always
+        - name: redis-container
+          image: redis
+          ports:
+            - containerPort: 6379
+          volumeMounts: 
+            - name: persistent-vol-devops
+              mountPath: /data
+        
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-audouypoulain-v2
+  labels:
+    version: v2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: devops-audouypoulain
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: devops-audouypoulain
+        version: v2
+    spec:
+      volumes: 
+        - name: persistent-vol-devops
+          persistentVolumeClaim:
+            claimName: redis-meta
+      containers:
+        - name: devops-audouypoulain
+          image: docker.io/thomaspln/devops-project:v2
           ports: 
             - containerPort: 3000
           imagePullPolicy: Always
