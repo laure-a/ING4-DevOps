@@ -122,6 +122,55 @@ Here, we created a docker-compose.yaml file to start our application. This way, 
 ![docker-compose up](images/dockerCompose.png)
 
 ### 6. Orchestration with Kubernetes
+
+Kubernetees, often called k8s, is an open source system for automating deployment and scaling that uses containers to make up an application into logical units for easy management and discovery. It is mainly written in Google Go. To represent the state of the cluster used, we use objects that are mainly  pods, deployments or services. Kubernetees can also be used for storage using volumes.
+
+In this part, we used minikube as our cluster and we had to create four .yaml files to run the application : deployment, service, persistent volume and persistent volume claim.
+
+We used the following commands in this part :
+
+* To start our cluster minikube :
+  ```
+  minikube start
+  ```
+* To apply configurations made in a .yaml file  :
+  ```
+  kubectl apply -f name_of_the_file.yaml
+  ```
+* To get the information about the different pods, deployments or services :
+  ```
+  kubectl get deployment
+  kubectl get service
+  kubectl get pod
+  ```
+* To run a web browser to reach the application :
+  ```
+  minikube service devops-audouypoulain
+  ```
+* To get the ip of our minikube :
+  ```
+  minikube ip
+  ```
+Here is what you are supposed to see when running some of the commands:
+
+* When applying a file, you should have a confirmation message like this :
+
+![kubernetees-apply](images/kuberneteesapply.png)
+
+* If you try to get your deployments you should have the list of your deployments like this :
+
+![kubernetees-get](images/kuberneteesget.png)
+
+* When you launch your app by using minikube service devops-audouypoulain
+
+![kubernetees-makeservice](images/kubernetees-makeservice.png)
+
+  Then, it should open a web browser and launch your app on the url indicated on the screen before; like this :
+
+![kubernetees-browser](images/kuberneteesbrowser.png)
+ 
+
+
 ### 7. Service mesh using Istio
 ### 8. Monitoring
 
