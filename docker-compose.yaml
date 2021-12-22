@@ -16,7 +16,7 @@ services:
     environment:
       host: redis
     # build: .
-    image: "laure15a/devops_project"
+    image: "thomaspln/devops_project"
     ports:
       - "3000:3000"
 volumes:

@@ -15,7 +15,8 @@ app.use(bodyParser.urlencoded({
 }))
 app.use(bodyParser.json())
 
-app.get('/', (req, res) => res.send('Here is version 2'))
+app.get('/', (req, res) => res.send('New version of the app!'))
+
 
 app.use('/user', userRouter)
 
