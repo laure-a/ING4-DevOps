@@ -235,10 +235,24 @@ or v2:
 
 We put as weight 80 for v1 and 20 for v2 and the results was logical as v1 appeared 7 times out of 10.
 
-
-  
-  
-
-
 ### 8. Monitoring
+
+Implementing monitory is mandatory in a project : it can alert a team if any application issue occurs in the environment. Furthermore, it helps a team to understand why those problems occured. 
+In this part, we had to install Prometheus and to set up monitoring with it. Prometheus is an open source monitoring solution which has been built primarly to gather and analyse time-series data. 
+We also had to install Grafana and to set up monitoring with it. It is an open source monitoring platform as well, built for observability.
+
+We followed the tutorials in the tenth lab but we encountered some issues as we did not manage to make it work.
+We built a file name prometheus.yaml in our k8s file and applied it and it went well. But when we try to run it in our browser, it did not recognize it.
+The minikube stopped itself very often and it was very difficult to work on it.
+
+Furthermore, it was very difficult to run some tests because it asked a great effort from our computer and it was hard for it to handle it.
+
+We tried the following command to make our prometheus.yaml work :
+
+  ```
+  kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=prometheus -o jsonpath='{.items[0].metadata.name}') 9090:9090 &
+  ```
+
+The same thing happened with Grafata.
+
 
