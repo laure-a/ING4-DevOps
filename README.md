@@ -169,8 +169,76 @@ Here is what you are supposed to see when running some of the commands:
 
 ![kubernetees-browser](images/kuberneteesbrowser.png)
  
-
-
 ### 7. Service mesh using Istio
+
+The aim of this part was to be able to launch our app using Istio and to create 2 route requests and 2 traffic shifting between the 2 versions of our app. 
+Istio is a platform that implements service mesh, and that provides a uniform way to secure, connect, and monitor microservices.
+
+We first had to configure our minikube to have as driver virtual box. Then we were able to download Istio and to install it and it was ready to be used. We then could run our app with Istio.
+
+Then, we had to create a second version of our app. We changed for that the message displayed by the app. Then we built a docker image and pulled it to our docker hub. That way, we had two docker images that correspond to each version of our app. 
+
+Then, we changed our deployment.yaml file to make it accept the two versions of our app : a v1 and a v2. At this moment, we deployed the three service mesh components which are: gateway, the destination rule and the virtual service. We created a yaml file for each of them.
+At this moment, we could chose from the virtual service file which version of the app we wanted to launch. And then, we implemented it in a way that each version of the app could be laucnhed depending on a weight which determines the frequency at which a version is launched compared to the other ( if both weight are 50, they have the same chance to be launched.
+
+After the commands used to install Istio, we used the following ones to make our code work:
+
+* To start our cluster minikube with the right parameters :
+  ```
+  minikube start --memory=2000 --cpus=2 --kubernetes-version=v1.22.3
+  ```
+* To build the new docker image :
+  ```
+  docker build -t devops_project:v2 .
+  ```
+* To tag it to make it recognizable by our repository :
+  ```
+  docker tag devops-project:v2 thomaspln/devops-project:v2
+  ```
+* To push it to our repository :
+  ```
+  docker push thomaspln/devops-project:v2
+  ```
+* To apply our new (gateway, virtualservice, destinationrule) or changed (deployment) yaml files:
+  ```
+  kubectl apply -f deployment.yaml
+  ```
+* To get the ip of our minikube :
+  ```
+  minikube ip
+  ```
+* To get the  public IP for Istio access :
+  ```
+  kubectl get svc -n istio-system
+  ```
+* To run the app, we just have to put http://192.168.59.100:31360/ on our browser. 192.168.59.100 corresponds to our minikube ip and 31360 corresponds to the number associated with our istio system when we call kubectl get svc -n istio-system. We have to look to the number next to our port number definer in gateway.yaml.
+
+Then, we had the folloing results : 
+
+* Our repository now looks like that:
+
+![dockerhub](images/DockerHub2v.png)
+  
+* When launching the kubectl get svc -n istio-system command,  we obtain this and we can then find the number that we will use to launch our app ( highlighted on the picture):
+
+![istio](images/istio-system.png)
+
+* When we launch our app in our browser, either version can be launched :
+
+v1: 
+
+![istio](images/istiov1.png)
+
+or v2:
+
+![istio](images/istiov2.png)
+
+We put as weight 80 for v1 and 20 for v2 and the results was logical as v1 appeared 7 times out of 10.
+
+
+  
+  
+
+
 ### 8. Monitoring
 
