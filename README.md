@@ -25,7 +25,23 @@ For this project, we created one branch for each feature that we were asked to i
   ```
   You can access the web application at : 20.20.20.2:3000
   
-*rajouter toutes les infos nécessaires pour installer les logiciels, les commandes pour lancer, etc*
+* Docker
+    ```
+  # add "sudo" at the beginning if necessary
+  #to build the image (do not forget the "." at the end)
+  docker build -t project-devops .
+  #to run it 
+  docker run -p 3000:3000 -d project-devops
+  ```
+  The web app is accessible at localhost:3000
+  
+* Docker compose
+  Go to the root directory of the project and run:
+   ```
+  # add "sudo" at the beginning if necessary
+  docker-compose up
+  ```
+  
 
 ## Authors
 
