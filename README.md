@@ -70,8 +70,41 @@ Finally, we created one last pull request for merging our ci-cd branch into the 
 ![Final workflow](images/workflowTest.png)
 
 ### 3. Infrastructure as code using Ansible
+Folder iac: in our Vagrantfile, we configured a VM (on virtual box) running on Centos7 Linux distribution. However, due to our settings/installs on virtual box and vagrant, we needed to install a vagrant plugin to allow virtual box guest.
+
+![Plugin](images/plugin.png)
+
+Once our VM configured, we provisioned it using Ansible. For this part, we had to install and run nodejs as the language runtime for our vm, the redis database, sync our application (userapi) and create health checks for our application. We started with node and redis. For nodejs, we used a script link. Here is preview of the redis insallation being successful:
+
+![RedisInstall](images/redisInstall.png)
+
+We then used the sync folders to provision the vm with our user api and created health checks for it. See screenshots below:
+
+![Ansible1](images/ansible1.png)
+![Ansible2](images/ansible2.png)
+
+At the end, after running the commands listed in the "usage" part of this readme, you should be able to display this web page:
+
+![Webiac](images/iac.png)
+
 ### 4. Containerisation with Docker
+In this part, the goal was to create a docker image of our application. This was done by creating a Dockerfile with all the instructions. We built it, got our image, and accessed it via localhost after running it:
+
+![docker commands](images/dockerImage2.png)
+![web page](images/dockerHello.png)
+
+The second part consisted in pushing this image to Docker Hub. For this, we created an account on docker hub and logged in via the command line interface (terminal) on our local machine. This way, we were able to tag and push the previously created image to docker hub. 
+![docker hub](images/dockerImage.png)
+![docker login](images/loginDocker.png)
+
+Here is the image we pushed on docker hub: "laure15a/devops_project"
+
 ### 5. Orchestration with Docker Compose
+Here, we created a docker-compose.yaml file to start our application. This way, we were able to run our previously created docker image but also the redis database.
+
+![docker](images/docker.png)
+![docker-compose up](images/dockerCompose.png)
+
 ### 6. Orchestration with Kubernetes
 ### 7. Service mesh using Istio
 ### 8. Monitoring
